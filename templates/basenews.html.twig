@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+{% for new in news %}
+    <article>
+    <br>
+        <h2>{{ new.title }}</h2>
+        <div class="metadata">{{ new.publishedAt|date("d/m/Y", "Europe/Paris") }} par le Journal {{ new.source.name }}</div>
+        <br>
+        <img src="{{ new.urlToImage }}" width="1110" height="576"><br><br>
+        <div class="content">
+        {{ new.content }}
+        </div><br>
+        <div class="social-media" style="">
+            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-url="{{ new.url }}" data-show-count="true">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+            <meta property="og:url"           content="{{ new.url }}" />
+            <meta property="og:type"          content="{{ new.source.name }}" />
+            <meta property="og:title"         content="{{ new.title }}" />
+            <meta property="og:description"   content="{{ new.description }}" />
+            <meta property="og:image"         content="{{ new.urlToImage }}" />
+
+            <div id="fb-root"></div>
+            <script>(function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
+            fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));</script>
+
+            <!-- Your share button code -->
+            <div class="fb-share-button" 
+            data-href="{{ new.url }}" 
+            data-layout="button_count">
+            </div>
+        </div><br>
+        <div class="row">
+            <div class="col-lg-6">
+                {% if app.user %}
+                    {% set isfav = false %}
+                    {% for fav in sifav %}
+                        {% if fav.title == new.title %}
+                            {% set isfav = true %}
+                        {% endif %}
+                    {% endfor %}
+                    <form action="" method="post">
+                        <input type="hidden" name="userid" value="{{ app.user.id }}">
+                        <input type="hidden" name="sourcename" value="{{ new.source.name }}">
+                        <input type="hidden" name="author" value="{{ new.author }}">
+                        <input type="hidden" name="title" value="{{ new.title }}">
+                        <input type="hidden" name="description" value="{{ new.description }}">
+                        <input type="hidden" name="url" value="{{ new.url }}">
+                        <input type="hidden" name="urltoimage" value="{{ new.urlToImage }}">
+                        <input type="hidden" name="publishedAt" value="{{ new.publishedAt|date("d/m/Y", "Europe/Paris") }}">
+                        <input type="hidden" name="content" value="{{ new.content }}">
+                        {% if isfav %}
+                            <button type="submit" disabled class="btn btn-warning">Add to favorite</button>
+                        {% else %}
+                            <button type="submit" class="btn btn-warning">Add to favorite</button>
+                        {% endif %}
+                    </form>
+                {% endif %}
+            </div>
+            <div class="col-lg-6">
+                <a href="{{ new.url }}" target="_blank" style="text-decoration:none;color:white;"><button style="float:right;" type="button" class="btn btn-primary">Read more</button></a>
+            </div>
+        </div>
+        <hr>
+    </article>
+    {% endfor %}
+{% endblock %}

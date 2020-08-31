@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Articles {% endblock %}
+
+{% block body %}
+<br>
+<div class="jumbotron">
+  <h1 class="display-3">Hello, Reader!</h1>
+  <p class="lead">Discover the list of media and browse their articles. Don't forget to bookmark them :)</p>
+  <hr class="my-4">
+  <p><i>Myexparticle</i>, the tool that allows you to collect your best articles</p>
+  <p class="lead">
+    <a class="btn btn-primary btn-lg" href="{{path('news')}}" role="button">Begin</a>
+  </p>
+</div>
+<div class="row">
+    <div class="col-lg-4">
+        <div class="card text-white bg-warning mb-auto" style="max-width: 20rem;">
+        <div class="card-header">Bitcoins</div>
+            <div class="card-body">
+                <h4 class="card-title">All about bitcoins</h4>
+                <p class="card-text">Keep up with bitcoin news and (maybe) find some tips</p>
+                <a href="{{path('bitcoins')}}"><button type="button" class="btn btn-primary">Discover</button></a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card bg-light mb-auto" style="max-width: 20rem;">
+            <div class="card-header">Apple</div>
+            <div class="card-body">
+                <h4 class="card-title">All about Apple</h4>
+                <p class="card-text">Apple addicts can quickly see the new news.</p>
+                <a href="{{path('apple')}}"><button type="button" class="btn btn-primary">Discover</button></a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card text-white bg-danger mb-3" style="max-width: 20rem;">
+            <div class="card-header">COVID-19</div>
+            <div class="card-body">
+                <h4 class="card-title">All about the Coronavirus</h4>
+                <p class="card-text">Follow the latest information on the corona and follow the best practices</p>
+                <a href="{{path('corona')}}"><button type="button" class="btn btn-primary">Discover</button></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

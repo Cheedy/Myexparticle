@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+{% if not app.user %}
+<meta http-equiv="refresh" content="0; URL={{ path('security_login') }}">
+{% else %}
+
+{% for  favori in favoris %}
+    <article>
+        <br>
+        <h2> {{ favori.title }}</h2>
+        <div class="metadata">{{ favori.publishedAt }} par le Journal {{ favori.sourcename }}</div>
+        <br>
+        <img src="{{ favori.urltoimage }}" width="1110" height="576"><br><br>
+        <div class="content">
+        {{ favori.content }}
+        </div><br>
+        <div class="social-media" style="">
+            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-url="{{ favori.url }}" data-show-count="true">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+            <meta property="og:url"           content="{{ favori.url }}" />
+            <meta property="og:type"          content="{{ favori.sourcename }}" />
+            <meta property="og:title"         content="{{ favori.title }}" />
+            <meta property="og:description"   content="{{ favori.description }}" />
+            <meta property="og:image"         content="{{ favori.urlToImage }}" />
+            <div id="fb-root"></div>
+                <script>(function(d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s); js.id = id;
+                js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
+                fjs.parentNode.insertBefore(js, fjs);
+                }(document, 'script', 'facebook-jssdk'));</script>
+
+                <!-- Your share button code -->
+                <div class="fb-share-button" 
+                data-href="{{ favori.url }}" 
+                data-layout="button_count">
+                </div>
+        </div><br>
+        <div class="row">
+            <div class="col-lg-6">
+                <form action="" method="post">
+                    <input type="hidden" name="userid" value="{{ app.user.id }}">
+                    <input type="hidden" name="id" value="{{ favori.id }}">
+                    <button type="submit" class="btn btn-danger">Remove from favorite</button>
+                </form>
+            </div>
+            <div class="col-lg-6">
+                <a href="{{ favori.url }}" target="_blank" style="text-decoration:none;color:white;"><button style="float:right;" type="button" class="btn btn-primary">Voir l'article</button></a>
+            </div>
+        </div>
+        <hr>
+    </article>
+
+{% endfor %}
+{% endif %}
+{% endblock %}
