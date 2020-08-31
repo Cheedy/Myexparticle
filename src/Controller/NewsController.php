@@ -91,6 +91,7 @@ class NewsController extends AbstractController
         $userid = $this->getUser();
 		if($userid != NULL)
 		{
+			$items = array();
         	$favoris = $this->getDoctrine()->getRepository('App:FavoriteNews')->findBy(['User_id' => $userid]);
 			foreach ($favoris as $entity)
 			{
@@ -179,9 +180,23 @@ class NewsController extends AbstractController
             $manager->flush();
             
         }
-		
+        
+        $items = array();
+        $userid = $this->getUser();
+		if($userid != NULL)
+		{
+			$items = array();
+        	$favoris = $this->getDoctrine()->getRepository('App:FavoriteNews')->findBy(['User_id' => $userid]);
+			foreach ($favoris as $entity)
+			{
+				$items[] = $entity; //Stock les données dans un tableau
+				//var_dump($items);
+			}
+        }
+
         return $this->render('news/apple.html.twig', [
             'news' => $data['articles'],
+            'sifav' => $items
 
         ]);
     }
@@ -219,8 +234,22 @@ class NewsController extends AbstractController
             
         }
 
+        $items = array();
+        $userid = $this->getUser();
+		if($userid != NULL)
+		{
+			$items = array();
+        	$favoris = $this->getDoctrine()->getRepository('App:FavoriteNews')->findBy(['User_id' => $userid]);
+			foreach ($favoris as $entity)
+			{
+				$items[] = $entity; //Stock les données dans un tableau
+				//var_dump($items);
+			}
+        }
+        
         return $this->render('news/bitcoins.html.twig', [
             'news' => $data['articles'],
+            'sifav' => $items
 
         ]);
     }
@@ -257,8 +286,22 @@ class NewsController extends AbstractController
             $manager->flush();
             
         }
+
+        $items = array();
+        $userid = $this->getUser();
+		if($userid != NULL)
+		{
+			$items = array();
+        	$favoris = $this->getDoctrine()->getRepository('App:FavoriteNews')->findBy(['User_id' => $userid]);
+			foreach ($favoris as $entity)
+			{
+				$items[] = $entity; //Stock les données dans un tableau
+				//var_dump($items);
+			}
+		}
         return $this->render('news/corona.html.twig', [
             'news' => $data['articles'],
+            'sifav' => $items
 
         ]);
     }
